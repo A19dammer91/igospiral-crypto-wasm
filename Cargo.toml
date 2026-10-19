@@ -1,0 +1,22 @@
+```toml
+[package]
+name = "mrs_auth_wasm"
+version = "0.1.0"
+edition = "2021"
+description = "WASM-wrapper rond mrs_auth_pqc voor iGoSpiral"
+license = "AGPL-3.0-only"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+mrs_auth_pqc = { git = "https://github.com/A19dammer91/MRS-AUTH-PQC", tag = "v2.0.0" }
+wasm-bindgen = "0.2"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom = { version = "0.2", features = ["wasm_js"] }
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
