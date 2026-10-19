@@ -28,3 +28,34 @@ Requirements: Rust and wasm-pack.
    ```bash
    cargo install wasm-pack
    wasm-pack build --release --target web
+```
+
+3. Output is generated in the pkg/ directory:
+   · mrs_auth_wasm_bg.wasm
+   · mrs_auth_wasm.js
+
+Usage
+
+Copy the pkg/ folder to your web root. Serve the files via a local web server.
+
+```html
+<script type="module">
+  import init, { keygen, encrypt, decrypt, clock_audit } from './pkg/mrs_auth_wasm.js';
+
+  async function run() {
+    await init(); 
+    const keys = keygen();
+    const seed = new Uint8Array([1, 2, 3, 4]);
+    console.log(clock_audit(seed));
+  }
+  
+  run();
+</script>
+```
+
+License
+
+This project is licensed under the AGPL-3.0-only.
+
+The underlying cryptographic library (MRS-AUTH-PQC) is the intellectual property of Bilal el Issaoui.
+A commercial license is available for proprietary use.
